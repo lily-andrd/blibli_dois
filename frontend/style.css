@@ -40,10 +40,9 @@ header {
     font-weight: bold;
 }
 
-/* Grid de Livros */
 #resultadosBusca {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: 1fr;
     gap: 25px;
     max-width: 1100px;
     margin: 0 auto;
@@ -80,14 +79,17 @@ button {
 }
 
 button:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+
+
 @media (min-width: 600px){
-    .grid-container {
+    #resultadosBusca {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (min-width: 900px){
-    .grid-container {
+    #resultadosBusca {
         grid-template-columns: repeat(3, 1fr);
     }
 } 
+

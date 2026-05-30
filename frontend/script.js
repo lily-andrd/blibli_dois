@@ -1,11 +1,28 @@
-const livrosEncontrados = [
-    { id: 1, titulo: "50 Tons de cinza", autor: "E. L. James", disponivel: true, imagem: "https://m.media-amazon.com/images/I/61TfhwBAMaL._AC_UF1000,1000_QL80_.jpg" },
-    { id: 2, titulo: "1984", autor: "George Orwell", disponivel: true, imagem: "https://m.media-amazon.com/images/I/61t0bwt1s3L._AC_UF1000,1000_QL80_.jpg" },
-    { id: 3, titulo: "Sociedade líquida", autor: "Zygmunt Bauman", disponivel: true, imagem: "https://m.media-amazon.com/images/I/51RuPVku+sS.jpg" },
-    { id: 4, titulo: "After", autor: "Anna Todd", disponivel: true, imagem: "https://m.media-amazon.com/images/I/81zCMLjshVL._UF1000,1000_QL80_.jpg" },
-    { id: 5, titulo: "The Vampire Diaries", autor: "L.J. Smith", disponivel: true, imagem: "https://m.media-amazon.com/images/I/71IB3b3XAsL.jpg" },
-    { id: 6, titulo: "O Pequeno Príncipe", autor: "Antoine de Saint-Exupéry", disponivel: true, imagem: "https://m.media-amazon.com/images/I/81SVIwe5L9L._UF1000,1000_QL80_.jpg" },
-];
+async function listarLivros(){
+
+    const resposta = await fetch(
+        "http://127.0.0.1:8000/livros"
+    );
+
+    const livros = await resposta.json();
+
+    const lista = document.getElementById("lista");
+
+    lista.innerHTML = "";
+
+    livros.forEach(livro => {
+
+        lista.innerHTML += `
+            <li>
+                ${livro.titulo}
+                -
+                ${livro.autor}
+            </li>
+        `;
+
+    });
+
+}
 
 const containerResultados = document.getElementById('resultadosBusca');
 const inputBusca = document.getElementById('inputBusca');
@@ -56,7 +73,6 @@ function exibirLivros(listaDeLivros) {
     });
 }
 
-// Lógica de Busca
 function realizarBusca() {
     const termo = inputBusca.value.toLowerCase();
     
@@ -77,4 +93,13 @@ inputBusca.addEventListener('keypress', (e) => {
 });
 
 // Inicializa a página
-exibirLivros(livrosEncontrados);
+exibirLivros(livrosEncontrados); 
+async function carregarLivros() {
+
+    const resposta = await fetch(`${API}/livros`);
+
+    const dados = await resposta.json();
+
+    livrosEncontrados = dados.dados;
+  carregarLivros();
+}
